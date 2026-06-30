@@ -1,13 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pen</title>
-  </head>
-  <body>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>MaviGPT</title>
 
-    <script src="./script.js"></script>
-  </body>
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: #1f2937;
+  padding: 10px;
+}
+
+.logo {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.chat-item {
+  padding: 8px;
+  margin: 5px 0;
+  background: #111827;
+  border-radius: 8px;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.msg {
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.user {
+  background: #3b82f6;
+  margin-left: auto;
+}
+
+.bot {
+  background: #1e293b;
+}
+
+/* INPUT */
+.input-area {
+  display: flex;
+  padding: 10px;
+  background: #1e293b;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+}
+
+button {
+  margin-left: 10px;
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="sidebar">
+    <div class="logo">🌿 MaviGPT</div>
+    <div class="chat-item">Sohbet 1</div>
+    <div class="chat-item">Fen</div>
+    <div class="chat-item">Proje</div>
+  </div>
+
+  <div class="main">
+
+    <div class="messages" id="messages">
+      <div class="msg bot">Merhaba 🌿 Ben MaviGPT</div>
+    </div>
+
+    <div class="input-area">
+      <input id="input" placeholder="Mesaj yaz...">
+      <button onclick="sendMsg()">➤</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function getResponse(text) {
+  text = text.toLowerCase();
+
+  if (text.includes("merhaba") || text.includes("selam")) {
+    return "Merhaba 🌿 Nasıl yardımcı olabilirim?";
+  }
+
+  if (text.includes("nasılsın")) {
+    return "İyiyim 🌿 Sen nasılsın?";
+  }
+
+  if (text.includes("yardım")) {
+    return "Tabii 🌿 Ne hakkında yardım istiyorsun?";
+  }
+
+  if (text.includes("adın ne")) {
+    return "Ben MaviGPT 🌿 senin yardımcı asistanınım.";
+  }
+
+  return "Bunu tam anlayamadım 🌿 daha açık yazar mısın?";
+}
+
+function sendMsg() {
+  const input = document.getElementById("input");
+  const messages = document.getElementById("messages");
+
+  if (input.value.trim() === "") return;
+
+  const userText = input.value;
+
+  const userMsg = document.createElement("div");
+  userMsg.className = "msg user";
+  userMsg.innerText = userText;
+  messages.appendChild(userMsg);
+
+  const botMsg = document.createElement("div");
+  botMsg.className = "msg bot";
+
+  setTimeout(() => {
+    botMsg.innerText = getResponse(userText);
+    messages.appendChild(botMsg);
+  }, 300);
+
+  input.value = "";
+}
+</script>
+
+</body>
 </html>
